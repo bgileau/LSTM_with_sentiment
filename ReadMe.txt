@@ -1,5 +1,7 @@
 Libraries and how to run the code:
 
+The below is necessary for LSTM. The NLP requirements is a more complex requirements section and requires special hardware to perform (GPU). So, read the NLP section for details regarding that and follow those separate instructions. Otherwise, just use the NLP results detailed below.
+
 The requirements.txt file is a list of all the libraries installed on my working environment. 
 However this environment is a general environment with lot's of libararies. These are my specific imports for this project:
 
