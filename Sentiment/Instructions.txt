@@ -1,0 +1,42 @@
+
+Step 0a: run conda install pip in the environment if needed
+Step 0b: Separately install 3 packages with CUDA enabled (pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118)
+	This is necessary, as testing showed that installing it via requirements.txt did not produce CUDA-enabled environments (necessary for running LLMs on GPU)
+Step 0c: Create env (conda create -n mgt6023_project) according to requirements.txt
+Step 0d: It may be necessary to restart your PC afterwards, as you may get "API" errors in step 4 (note: the API is just local).
+Step 1: Run convert_source_data.ipynb with the Combined_News_DJIA.csv file path set properly.
+Step 2: Run vader.ipynb cells to see an example of poor vader performance
+Step 3: Run BERT attempt.ipynb cells to see an example of BERT performance
+Step 4.a: Download a vicuna-7B model from https://github.com/lm-sys/FastChat and place associated files in the NLP folder (i.e. NLP/vicuna-7b-v1.3)
+Step 4.b: Follow the instructions: (it may be beneficial to view Example of it running.png)
+Open 4 anaconda prompts:
+----------------------
+cd <location of scripts>
+conda activate <code env>
+
+---
+e.g.
+cd C:\Users\bgileau\Documents\GATech\MGT6203\Project
+conda activate vicuna
+
+---------------------
+e.g.
+cd C:\Users\bgileau\Documents\GATech\MGT6203\Project Test Implementation\sentiment_submission
+conda activate test12345
+
+---------------------
+In each anaconda prompt do the following (leave 4 for last)
+1:
+python -m fastchat.serve.controller
+
+2:
+python -m fastchat.serve.openai_api_server --host localhost --port 8000
+
+3:
+python -m fastchat.serve.model_worker --model-names "gpt-3.5-turbo,text-davinci-003,text-embedding-ada-002" --model-path NLP/vicuna-7b-v1.3 --load-8bit
+
+4 (once all files are prepared):
+python "C:\Users\bgileau\Documents\GATech\MGT6203\Project\run_langchain.py"
+python "C:\Users\bgileau\Documents\GATech\MGT6203\Project Test Implementation\sentiment_submission\run_langchain.py"
+
+Step 5: Once finished (script is also built to be able to start/stop on the fly, if you kill the execution), review your sentiment results file which is written in that same directory.
